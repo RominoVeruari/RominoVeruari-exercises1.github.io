@@ -1,40 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="calculator.js"></script>
     <title>Document</title>
 </head>
-<body>
-    <form action="" >
-        <div>
-            <input id="display">
-        </div>
-        <div id="inputs">
-            <div>
-                <label for="firstnumb">First number</label></br>
-                <input type="text" id="fnumb" value="">
-            </div>
-            <div>
-                <label for="secondnumb">Second number</label></br>
-                <input type="text" id="snumb" value="">
-            </div>
-            <div>
-                <label for="operation">Operator</label>
-                <select name="operation" >
-                    <option value="+">+</option>
-                    <option value="-">-</option>
-                    <option value="*">*</option>
-                    <option value="/">/</option>
-                </select>
 
-            </div>
-            <div>
-                <input type="submit" onclick="operation()" value="Submit">
-            </div>
+<body>
+    <div>
+        <div id="display">
+
         </div>
-    </form>
-    <script src="calculator.js"></script>
+        <form action="" method="post">
+            <div id="inputs">
+                <div>
+                    <label for="firstnumb">First number</label></br>
+                    <input type="text" id="fnumb" name="fnumb" value="">
+                </div>
+                <div>
+                    <label for="secondnumb">Second number</label></br>
+                    <input type="text" id="snumb" name="snumb" value="">
+                </div>
+                <div>
+                    <label for="operation">Operator</label>
+                    <select id="operation" name="operation">
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">*</option>
+                        <option value="/">/</option>
+                    </select>
+
+                </div>
+                <div>
+                    <input type="submit" id="submit" value="Submit">
+                </div>
+            </div>
+        </form>
+    </div>
+    
 </body>
+
 </html>

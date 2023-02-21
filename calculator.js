@@ -1,32 +1,42 @@
+window.onload() = function () {
+    document.querySelector("submit").onclick = function (e) {
+        //prevents reload
+        e.preventDefault()
 
-function operation() {
-    let firstnumber = document.getElementById("fnumb").value;
-    let secondnumber = document.getElementById("snumb").value;
-    let operator = document.getElementById("operation").value;
-    let result = 0;
-    switch (operator) {
-        case 0:
-            if (operator = "+") {
+        let result = 0;
+
+        let firstnumber = document.querySelector("#fnumb").value;
+        console.log(firstnumber)
+        let secondnumber = document.querySelector("#snumb").value;
+        let operator = document.querySelector("operation").value;
+        //request only numbers
+        firstnumber = parseFloat(firstnumber);
+        secondnumber = parseFloat(secondnumber);
+
+        switch (operator) {
+            case "+":
                 result = firstnumber + secondnumber;
-            } break;
-        case 1:
-            if (operator = "-") {
+                break;
+            case "-":
                 result = firstnumber - secondnumber;
-            } break;
-        case 2:
-            if (operator = "*") {
+                break;
+            case "*":
+
                 result = firstnumber * secondnumber;
-            } break;
-        case 3:
-            if (operator = "/") {
-                if(secondnumber===0){
-                    document.getElementById("display").innerHTML("Error")
-                }
-                result = firstnumber / secondnumber;
-            } break;
-        default:
+                break;
+            case "/":
+                if (operator = "/") {
+                    if (secondnumber === 0) {
+                        result = "Error"
+                    }
+                    result = firstnumber / secondnumber;
+                } break;
+            default:
+                result = "Error";
+                break;
+        }
+
+        document.querySelector("#display").innerText = result;
+
     }
-    
-    document.querySelector("#display").innerText = result;
-    
 }
