@@ -7,18 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    <form >
+    <form action="" >
         <div>
-            <input type="number">
+            <input type="text" id="display">
         </div>
         <div id="inputs">
             <div>
                 <label for="firstnumb">First number</label></br>
-                <input type="number" id="fnumb">
+                <input type="text" id="fnumb" value="">
             </div>
             <div>
                 <label for="secondnumb">Second number</label></br>
-                <input type="number" id="snumb">
+                <input type="text" id="snumb" value="">
             </div>
             <div>
                 <label for="operation">Operator</label>
@@ -31,9 +31,10 @@
 
             </div>
             <div>
-                <input type="submit" value="Submit">
+                <input type="submit" onclick="operation()" value="Submit">
             </div>
         </div>
     </form>
+    <script src="calculator.js"></script>
 </body>
 </html>
