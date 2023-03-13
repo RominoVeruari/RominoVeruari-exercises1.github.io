@@ -19,4 +19,4 @@ function christmasTree(n){
     }
 
 }
-christmasTree(4);
+christmasTree(6);

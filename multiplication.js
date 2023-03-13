@@ -21,4 +21,4 @@ function multiplicationTable(n) {
     }
 
 }
-multiplicationTable(3);
+multiplicationTable(10);
