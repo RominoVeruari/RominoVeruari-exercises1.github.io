@@ -12,42 +12,43 @@
 
 //This function displays basic data of the restaurants
 
-// datafilter();
-// async function datafilter() {
-//     const responseRestaurant = await fetch(`./jsno-files/restaurants.json`);
-//     const dataRestaurants = await responseRestaurant.json();
-//     const myJson = JSON.stringify(dataRestaurants);
-//     console.log(myJson)
-//     return myJson;
 
-// }
-// const filter = datafilter();
-// console.log(filter);
-getDataRestaurant();
+
+
+
+getDataRestaurant(); //we initialaze the page with restaurants standart data
 async function getDataRestaurant() {
+    // we fetch and populate the restaurants data
     const responseRestaurant = await fetch(`./jsno-files/restaurants.json`);
     const dataRestaurants = await responseRestaurant.json();
-    // console.log(dataRestaurants);
     let length = dataRestaurants.length;
     let temp = "";
-const restaurant = document.getElementById("firstRow")
+    const restaurant = document.getElementById("firstRow")
     for (let i = 0; i < length; i++) {
-        temp += `<div class="col" id="restaurant`+dataRestaurants[i].id+`">`;
+        temp += `<div class="col" id="restaurant` + dataRestaurants[i].id + `">`;
         temp += `<div class="restaurantName" id="restaurantName">` + dataRestaurants[i].name + `</div>`;
         temp += `<div class="restaurantCity" id="restaurantCity">` + dataRestaurants[i].city + `</div>`;
         temp += `<div class="restaurantCuisine" id="restaurantCuisine">` + dataRestaurants[i].cuisine + `</div>`
         temp += `</div>`
-        // console.log(restaurant)
-        
+
+
     }
     restaurant.innerHTML = temp;
 
 };
+
+const myCollection = document.getElementsByClassName("col");
+const myButtons = document.getElementsByClassName("showDetails");
+//we declare 3 variables to store the restaurants standart data
+let standartInfo0 = "";
+let standartInfo1 = "";
+let standartInfo2 = "";
+
 // this function displays detailed data for restaurant like address and description
 
 async function showDetails(e) {
-    console.log(e);
-    
+    // console.log(e);
+
     //fetch first restaurant data
     const responseShowDetails1 = await fetch(`./jsno-files/restaurant1.json`);
     const dataShowDetails1 = await responseShowDetails1.json();
@@ -57,68 +58,89 @@ async function showDetails(e) {
     // fetch third restaurant data 
     const responseShowDetails3 = await fetch(`./jsno-files/restaurant3.json`);
     const dataShowDetails3 = await responseShowDetails3.json();
-
-    const myCollection = document.getElementsByClassName("col");
-    // let length1 = dataShowDetails1.length;
-    // let length2 = dataShowDetails2.length;
-    // let length3 = dataShowDetails3.length;
     if (e === 0) {
         let temp = myCollection[0].innerHTML;
         let newTemp = `<div class="restaurantAddress" id="restaurantAddress">` + dataShowDetails1.address + `</div>
         <div class="restaurantDescription" id="restaurantDescription">` + dataShowDetails1.description + `</div>`;
-        myCollection[0].innerHTML = temp + newTemp;
-    } else if (e=== 1){
+        standartInfo0 = temp; //we store the restaurants standart data
+        myCollection[0].innerHTML = temp + newTemp; //we add the details 
+
+        myButtons[0].setAttribute("onclick", "showLess(0)")
+        myButtons[0].innerHTML = "Show Less"
+    } else if (e === 1) {
         let temp = myCollection[1].innerHTML;
         let newTemp = `<div class="restaurantAddress" id="restaurantAddress">` + dataShowDetails2.address + `</div>
         <div class="restaurantDescription" id="restaurantDescription">` + dataShowDetails2.description + `</div>`;
+        standartInfo1 = temp;
         myCollection[1].innerHTML = temp + newTemp;
-    } else if (e=== 2){
+        myButtons[1].setAttribute("onclick", "showLess(1)")
+        myButtons[1].innerHTML = "Show Less"
+    } else if (e === 2) {
         let temp = myCollection[2].innerHTML;
         let newTemp = `<div class="restaurantAddress" id="restaurantAddress">` + dataShowDetails3.address + `</div>
         <div class="restaurantDescription" id="restaurantDescription">` + dataShowDetails3.description + `</div>`;
+        standartInfo2 = temp;
         myCollection[2].innerHTML = temp + newTemp;
+        myButtons[2].setAttribute("onclick", "showLess(2)")
+        myButtons[2].innerHTML = "Show Less"
     }
 
+
 };
-// // search engine
-// const searchInput = document.querySelector('.input');
-// searchInput.addEventListener("input", (e) => {
-//     let value = e.target.value;
+
+function showLess(e) {
+
+    if (e === 0) {
+        myCollection[0].innerHTML = standartInfo0 // we call the standart data and remove the details
+        myButtons[0].setAttribute("onclick", "showDetails(0)")
+        myButtons[0].innerHTML = "Show Details"
+    } else if (e === 1) {
+        myCollection[1].innerHTML = standartInfo1
+        myButtons[1].setAttribute("onclick", "showDetails(1)")
+        myButtons[1].innerHTML = "Show Details"
+    } else if (e === 2) {
+        myCollection[2].innerHTML = standartInfo2
+        myButtons[2].setAttribute("onclick", "showDetails(2)")
+        myButtons[2].innerHTML = "Show Details"
+    }
+};
 
 
-//     if (value && value.trim().length > 0) {
-//         value = value.trim().toLowerCase();
-//         const lengthfilter = datafilter().length
-//         for (let i = 0; i < lengthfilter; i++)
-//             if (value === datafilter[i].city.value || value === datafilter[i].cuisine.value) {
+async function dataSearch() {
+    // e.preventDefault();
+    const responseRestaurant = await fetch(`./jsno-files/restaurants.json`);
+    const dataRestaurants = await responseRestaurant.json();
+    // const dataFilter = JSON.stringify(dataRestaurants);
+    console.log(dataRestaurants)
+    // console.log(dataFilter)
+    const searchInput = document.getElementById("search");
 
+    let value = searchInput.value;
+    let results = document.getElementById("results-firstRow");
+    let temp = ""
+    
+    if (value && value.trim().length > 0) {
+        value = value.trim();
 
-//                 result();
+        const lengthFilter = dataRestaurants.length
 
-//             }
-//         return "No match found"
+        for (let i = 0; i < lengthFilter; i++)
+            if (value === dataRestaurants[i].city || value === dataRestaurants[i].cuisine) {
+                // add data to results
+                temp += `<p>` + dataRestaurants[i].name + `</p>`;
+                temp += `<p>` + dataRestaurants[i].city + `</p>`;
+                temp += `<p>` + dataRestaurants[i].cuisine + `</p>`;
+                
 
-//     } else {
-//         return `There is no Restaurant  in this city or with this cuicine`;
+            }
+            results.innerHTML = temp;
+    }
+    else {
+        results.innerHTML = `<p> What are you looking for ? </p>`; // add to results
+    }
+}
 
-//     }
-
-// });
-// // clear button function
-// const clearButton = document.getElementById('clear')
-
-// clearButton.addEventListener("click", () => {
-//     let searchBar = "";
-//     document.getElementById("search").innerHTML = searchBar;
-//     document.getElementById("list").innerHTML = searchBar;
-// })
-// let results = document.getElementById("results");
-// function display(e) {
-//     let temp3 = "";
-//     let length = e.length
-//     for (i = 0; i < length; i++) {
-//         temp3 += `<div class="col" id="` + e[i].id + `>`;
-//         temp3 += `<div`
-//     }
-//     document.getElementById("results-firstRow").innerHTML = temp3;
-// }
+function dataClear() {
+    document.getElementById("search").setAttribute("placeholder", "search by city or cuisine...");
+    document.getElementById("results-firstRow").innerHTML = "";
+}
