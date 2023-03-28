@@ -111,14 +111,16 @@ async function dataSearch() {
     const responseRestaurant = await fetch(`./jsno-files/restaurants.json`);
     const dataRestaurants = await responseRestaurant.json();
     // const dataFilter = JSON.stringify(dataRestaurants);
-    console.log(dataRestaurants)
+
     // console.log(dataFilter)
     const searchInput = document.getElementById("search");
 
+
     let value = searchInput.value;
     let results = document.getElementById("results-firstRow");
-    let temp = ""
-    
+    let temp = "";
+
+
     if (value && value.trim().length > 0) {
         value = value.trim();
 
@@ -127,16 +129,18 @@ async function dataSearch() {
         for (let i = 0; i < lengthFilter; i++)
             if (value === dataRestaurants[i].city || value === dataRestaurants[i].cuisine) {
                 // add data to results
-                temp += `<p>` + dataRestaurants[i].name + `</p>`;
-                temp += `<p>` + dataRestaurants[i].city + `</p>`;
-                temp += `<p>` + dataRestaurants[i].cuisine + `</p>`;
-                
-
+                temp += `<div class="col" id="restaurant-result">`;
+                temp += `<div class="restaurantName" id="restaurantName">` + dataRestaurants[i].name + `</div>`;
+                temp += `<div class="restaurantCity" id="restaurantCity">` + dataRestaurants[i].city + `</div>`;
+                temp += `<div class="restaurantCuisine" id="restaurantCuisine">` + dataRestaurants[i].cuisine + `</div>`
+                temp += `<div class="container-fluid text-center" id ="menu">`;
+                temp += `<div class="row" id="menuItems"></div></div>`
+                temp += `<button class="showMenu" onclick="showMenu(` + i + `)">Show Menu</button></div>`
             }
-            results.innerHTML = temp;
+        results.innerHTML = temp;
     }
     else {
-        results.innerHTML = `<p> What are you looking for ? </p>`; // add to results
+        results.innerHTML = `<div> What are you looking for ? </p>`; // add to results
     }
 }
 
@@ -144,3 +148,70 @@ function dataClear() {
     document.getElementById("search").setAttribute("placeholder", "search by city or cuisine...");
     document.getElementById("results-firstRow").innerHTML = "";
 }
+
+async function showMenu(e) {
+    //fetch menu1
+    const responseMenu1 = await fetch(`./jsno-files/menu1.json`);
+    const dataMenu1 = await responseMenu1.json();
+
+    //fetch menu2
+    const responseMenu2 = await fetch(`./jsno-files/menu2.json`);
+    const dataMenu2 = await responseMenu2.json();
+
+    //fetch menu3
+    const responseMenu3 = await fetch(`./jsno-files/menu3.json`);
+    const dataMenu3 = await responseMenu3.json();
+
+    let newTemp = "";
+    let data = "";
+
+    if (e === 0) {
+        data = dataMenu1;
+        for (let i = 0; i < data.length; i++) {
+
+            newTemp += `<div class="col">`;
+            newTemp += `<div> Name: ` + data[i].name + `</div>`;
+            newTemp += `<div> Kind: ` + data[i].kind + `</div>`;
+            newTemp += `<div> Price: ` + data[i].price + `</div></div></div>`;
+            
+        }
+        document.getElementById("menuItems").innerHTML = newTemp;
+        
+    } else if (e === 1) {
+        data = dataMenu2;
+        for (let i = 0; i < data.length; i++) {
+
+            newTemp += `<div class="col">`;
+            newTemp += `<div> Name: ` + data[i].name + `</div>`;
+            newTemp += `<div> Kind: ` + data[i].kind + `</div>`;
+            newTemp += `<div> Price: ` + data[i].price + `</div></div></div>`;
+        }
+        document.getElementById("menuItems").innerHTML = newTemp;
+        
+    } else if (e === 2) {
+        data = dataMenu3;
+        for (let i = 0; i < data.length; i++) {
+
+            newTemp += `<div class="col">`;
+            newTemp += `<div> Name: ` + data[i].name + `</div>`;
+            newTemp += `<div> Kind: ` + data[i].kind + `</div>`;
+            newTemp += `<div> Price: ` + data[i].price + `</div></div></div>`;
+        }
+        document.getElementById("menuItems").innerHTML = newTemp;
+        
+    }
+
+
+}
+
+// function deleteMyDiv() {
+//     const restaurant = document.getElementById("restaurant1");
+//     console.log(restaurant);
+//     // restaurant.removeChild(document.getElementById(`restaurantName`))
+//     const node = document.createElement("div");
+//     const textnode = document.createTextNode("<div>Test</p>")
+//     node.appendChild(textnode);
+//     // restaurant.removeChild(document.getElementById("restaurantCity"));
+//     // restaurant.appendChild(node);
+//     restaurant.insertBefore(node, restaurant.children[0]);
+// };
